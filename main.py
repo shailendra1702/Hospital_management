@@ -5,7 +5,7 @@ app = Flask(__name__)
   
 connection = pymysql.connect(host='localhost', 
                              user='root',
-                             password='Ayush17!@#&%',
+                             password='',
                              database='hospital_management',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
