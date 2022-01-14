@@ -1,0 +1,45 @@
+{% extends "base.htm" %} {% block title %}Register{% endblock %} {% block head
+%} {{ super() }} {% endblock %} {% block content %} {{ super() }}
+<div class="container-md d-flex justify-content-center my-5">
+  <form>
+    <div class="mb-3">
+      <label for="username" class="form-label">username</label>
+      <input type="text" class="form-control" id="username" />
+    </div>
+    
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        aria-describedby="emailHelp"
+      />
+      <div id="emailHelp" class="form-text">
+        We'll never share your email with anyone else.
+      </div>
+    </div>
+    
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" />
+    </div>
+
+    <div class="mb-3 row">
+      <div class="row col-md-6">
+        <label for="Fname" class="col-md-4 col-form-label">First name</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="Fname" />
+        </div>
+      </div>
+      <div class="row col-md-6">
+        <label for="Lname" class="col-md-4 col-form-label">last name</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="Lname" />
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+{% endblock %}
