@@ -1,10 +1,17 @@
-from flask import Flask, request, g, render_template
+from asyncio.windows_events import NULL
+from flask import Flask, render_template,Blueprint
 import pymysql
-from Backend.authentication import auth
 from pymysql.constants import CLIENT
 
 app = Flask(__name__)
-app.register_blueprint(auth)
+
+from Backend.authentication import auth
+from Backend.department import dept
+
+app.register_blueprint(auth,url_prefix="/auth")
+app.register_blueprint(dept,url_prefix="/dept")
+
+
 app.secret_key = "3f46e7936cd92e18c66af8eb7b0575058aba97e6972fc1bce3fd53d3e11b4861"
 
 
@@ -24,15 +31,15 @@ def table():
     cursor.close()
     db.close()
     print("sql script executed")
+    
+table()
 
-
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def hello():
     print('during view')
     return render_template('hello.htm', name=None)
 
-
 # main driver function
 if __name__ == '__main__':
-    table()
-    app.run(port=8000, debug=True)
+    app.run(port=7000, debug=True)
+    
