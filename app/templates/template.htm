@@ -1,0 +1,16 @@
+{% extends "templates/base.htm" %} {% block title %}Login{% endblock %} {% block head %}
+{{ super() }} {% endblock %} {% block content %} {{ super() }}
+<script>
+  function AlertMessage(){
+    let msg = "{{msg}}";
+    if (msg.length == 0)
+      return;
+    
+    else
+     window.alert(msg);
+  }
+  //window.alert('{{msg}}')
+  window.load(AlertMessage())
+</script>
+
+{% endblock %}

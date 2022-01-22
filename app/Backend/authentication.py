@@ -37,8 +37,8 @@ def db_disconnect(exception):
         print('connection closed')
 
 
-@auth.route('/login', methods=['GET', 'POST'])
-def login():
+@auth.route('/patientlogin', methods=['GET', 'POST'])
+def userLogin():
     msg = ''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         
@@ -51,19 +51,60 @@ def login():
         if account:
             session['loggedin'] = True
             session['username'] = account['PatId']
-           
+            session['user'] = 'patient'
+            msg = 'Logged in successfully !'
             return redirect(url_for('hello')) #has to changed to dashboard.htm
         else:
-            g.cursor.execute(
+            msg = 'no user found with the given details, Check username/password'
+    elif request.method == 'POST':
+        msg = "please enter login details"
+    else:
+        return render_template('login.htm', msg=msg)
+
+@auth.route('/doctorlogin', methods=['GET', 'POST'])
+def doctorLogin():
+    msg = ''
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+        
+        username = request.form['username']
+        password = request.form['password']
+        g.cursor.execute(
             'SELECT * FROM Doctor WHERE DocId = % s AND password = % s', (username, password, ))
-            account1 = g.cursor.fetchone()
-            if account1:
-                session['loggedin'] = True
-                session['username'] = account['DocId']
-                msg = 'Logged in successfully !'
-                return redirect(url_for('hello')) #has to changed to dashboard.htm
-            msg = 'Incorrect username / password !'
-         
+        account = g.cursor.fetchone()
+        if account:
+            session['loggedin'] = True
+            session['username'] = account['DocId']
+            session['user'] = 'doctor'
+            msg = 'Logged in successfully !'
+            return redirect(url_for('hello')) #has to changed to dashboard.htm  
+        else:
+            msg = 'no user found with the given details, Check username/password'
+    elif request.method == 'POST':
+        msg = "please enter login details"
+        
+    return render_template('login.htm', msg=msg)
+
+@auth.route('/adminlogin', methods=['GET', 'POST'])
+def adminLogin():
+    msg = ''
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+        
+        username = request.form['username']
+        password = request.form['password']
+        g.cursor.execute(
+            'SELECT * FROM Doctor WHERE DocId = % s AND password = % s', (username, password, ))
+        account = g.cursor.fetchone()
+        if account:
+            session['loggedin'] = True
+            session['username'] = account['DocId']
+            session['user'] = 'admin'
+            msg = 'Logged in successfully !'
+            return redirect(url_for('hello')) #has to changed to dashboard.htm  
+        else:
+            msg = 'no user found with the given details, Check username/password'
+    elif request.method == 'POST':
+        msg = "please enter login details"
+        
     return render_template('login.htm', msg=msg)
 
 
@@ -71,7 +112,8 @@ def login():
 def logout():
     session.pop('loggedin', None)
     session.pop('username', None)
-    return redirect(url_for('login'))
+    session.pop('user', None)
+    return redirect(url_for('.login'))
 
 
 @auth.route('/register', methods=['GET',"POST"])

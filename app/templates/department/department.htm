@@ -1,0 +1,34 @@
+{% extends "base.htm" %} {% block title %}Login{% endblock %} {% block
+head %} {{ super() }} {% endblock %} {% block content %} {{ super() }}
+<!-- <script>
+  function AlertMessage() {
+    let msg = "{{msg}}";
+    if (msg.length == 0) return;
+    else window.alert(msg);
+  }
+  //window.alert('{{msg}}')
+  window.load(AlertMessage());
+</script> -->
+<div class="table-responsive justify-content-center mt-5 mx-auto w-75">
+  <!-- <div class="table-responsive"> -->
+    <table class="table ">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">department</th>
+          <th scope="col">HOD</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for item in res %}
+          <tr>
+              <th scope="row">{{item.DeptId}}</th>
+              <td>{{item.Dname}}</td>
+              <td>{{item.Head}}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+  <!-- </div> -->
+</div>
+{% endblock %}

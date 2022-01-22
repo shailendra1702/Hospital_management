@@ -15,7 +15,7 @@ def db_connect():
                                    charset='utf8mb4',
                                    cursorclass=pymysql.cursors.DictCursor,
             )
-            cursor = g.db.cursor()
+            g.cursor = g.db.cursor()
             print('connection established')
     except Exception as e:
         print('error in establishing connection')
@@ -42,10 +42,14 @@ def department():
     g.cursor.execute('select * from department')
     res = g.cursor.fetchall()
     print(res)
-    return render_template('hello.htm', name = 'department')
+    return render_template('department/department.htm', res = res)
 
 @dept.route('/add',methods = ["GET", "POST"])
 def addDepartment():
+    # username = session["username"]
+    # g.cursor.execute('select AdminId from admin where AdminId = %s',(username,))
+    # flag = g.cursor.fetchone()
+    
     if request.method == 'POST' and 'id' in request.form and 'Dname' in request.form:
         try:
             dname = request.form['Dname']
