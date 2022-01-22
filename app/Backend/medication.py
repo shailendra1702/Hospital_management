@@ -46,10 +46,10 @@ def medication():
 
 @med.route('/add',methods = ["GET", "POST"])
 def addMedication():
-    username = session["username"]
-    g.cursor.execute('select AdminId from admin where AdminId = %s',(username,))
-    flag = g.cursor.fetchone()
-    if request.method == 'POST' and 'medcode' in request.form and 'mname' in request.form and 'mbrand' in request.form and 'desc' in request.form and flag != None:
+    # username = session["username"]
+    # g.cursor.execute('select AdminId from admin where AdminId = %s',(username,))
+    # flag = g.cursor.fetchone()
+    if request.method == 'POST' and 'medcode' in request.form and 'mname' in request.form and 'mbrand' in request.form and 'desc' in request.form:
         
         medcode = request.form['medcode']
         mname = request.form['mname']

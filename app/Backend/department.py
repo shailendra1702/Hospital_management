@@ -14,6 +14,7 @@ def db_connect():
                                    database='hospital_management',
                                    charset='utf8mb4',
                                    cursorclass=pymysql.cursors.DictCursor,
+                                   client_flag=CLIENT.MULTI_STATEMENTS,
             )
             g.cursor = g.db.cursor()
             print('connection established')
@@ -49,27 +50,32 @@ def addDepartment():
     # username = session["username"]
     # g.cursor.execute('select AdminId from admin where AdminId = %s',(username,))
     # flag = g.cursor.fetchone()
-    
-    if request.method == 'POST' and 'id' in request.form and 'Dname' in request.form:
+    msg = ''
+    if request.method == "POST" and "id" in request.form and "Dname" in request.form:
         try:
+            id = request.form['id']
             dname = request.form['Dname']
-            head = request.form.get('head','')
+            head = request.form['head']
             
             if not re.match(r'[a-zA-Z]+',dname):
-                msg = 'department name should contain only alphabaet characters'
-            elif head not in "":
-                if not re.match(r'[a-zA-Z]+',head):
-                    msg = 'head name should contain only alphabaet characters'
-            elif len(request.form['id']) != 3:
-                msg = "depid should be of 3 digits"
+                msg = 'department name should contain only alphabet characters'
+            elif not re.match(r'[0-9]+',head):
+                msg = 'HOD id should be number'
             else:
-                id = int(request.form['id'])
-                g.cursor.execute('insert into department values(%d,%s,%s)',(id,dname,head))
-                msg = 'department {dname} successfully added'
+                g.cursor.execute('insert into department values (%s,%s,%s)',(id,dname,head))
+                g.db.commit()
+                msg = f'department {dname} successfully added'
+                print(msg)
         
-        except ValueError as e:
+        except Exception as e:
+            print(e) 
             msg = 'id should only contain numbers'
         
         finally:
-            return render_template('add_department.htm',msg = msg)
+            return render_template('department/add_department.htm',msg = msg)
+    elif request.method == "POST":
+        msg = "please fill up the form"
+        return render_template('department/add_department.htm',msg = msg)
+    else:
+        return render_template('department/add_department.htm',msg = msg)
         

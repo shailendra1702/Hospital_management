@@ -1,4 +1,4 @@
-{% extends "templates/base.htm" %} {% block title %}Login{% endblock %} {% block head %}
+{% extends "base.htm" %} {% block title %}Login{% endblock %} {% block head %}
 {{ super() }} {% endblock %} {% block content %} {{ super() }}
 <script>
   function AlertMessage(){
@@ -12,5 +12,37 @@
   //window.alert('{{msg}}')
   window.load(AlertMessage())
 </script>
+<div class="container-md my-5 w-75 p-5 bg-success">
+  <div class="container-fluid p-3">
+    <h1 class="display-5 fw-bold">Add Department</h1>
+  </div>
+  <form action = "{{ url_for('dept.addDepartment') }}" method="post" class ="justify-content-spacearound p-4">
+    <div class="mb-3 row ">
+      <label for="DeptId" class="form-label col-sm-3">Department Id</label>
+      <div class="col-sm-9">
+        <input type="number" class="form-control " id="DeptId" name="id" />
+      </div>
+    </div>
+
+    <div class="mb-3 row ">
+      <label for="Dname" class="form-label col-sm-3">Department name</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control " id="Dname" name="Dname" />
+      </div>
+    </div>
+
+    <div class="mb-3 row ">
+      <label for="head" class="form-label col-sm-3">HOD</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="head" name="head" />
+      </div>
+    </div>
+
+    
+    <button type="submit" class="btn btn-primary" id="submitbutton">
+      Submit
+    </button>
+  </form>
+</div>
 
 {% endblock %}
