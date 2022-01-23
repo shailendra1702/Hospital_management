@@ -15,7 +15,7 @@ def db_connect():
                                    charset='utf8mb4',
                                    cursorclass=pymysql.cursors.DictCursor,
             )
-            cursor = g.db.cursor()
+            g.cursor = g.db.cursor()
             print('connection established')
     except Exception as e:
         print('error in establishing connection')
@@ -38,23 +38,29 @@ def db_disconnect(exception):
 import re
      
 @room.route('/')
-def department():
-    g.cursor.execute('select Type,Available from Rooms')
+def roomDetails():
+    g.cursor.execute('select * from Room')
     res = g.cursor.fetchall()
     print(res)
-    return res
+    return render_template('room/room.htm',res = res)
 
 @room.route('/add',methods = ["GET", "POST"])
 def bookRoom():
-    user = session["user"]
-    
-    if request.method == 'POST' and 'selectedRoom' in request.form and user == 'admin':
-                
-        selectedRoom = request.form['selectedRoom']
-        
-        g.cursor.execute('update table Rooms set ')
-        msg = 'department {dname} successfully added'
+    # user = session["user"]
+    msg = ''
+    try:
+        if request.method == 'POST':
+                    
+            selectedRoom = request.form.getlist('roomtype')
+            print(selectedRoom)
             
-    g.cursor.execute('select Type,Available,Total from Rooms')
+            g.cursor.executemany('update Room set Booked = Booked+1,\
+                                Unbooked = Unbooked-1 where Room_type = %s',selectedRoom)
+            g.db.commit()
+            msg = 'room booked successfully'
+    except Exception as e:
+        print(e)
+       
+    g.cursor.execute('select * from Room') 
     res = g.cursor.fetchall()
-    return render_template('bookRoom.htm',res = res)
+    return render_template('room/room_select.htm',res = res,msg=msg)

@@ -1,0 +1,36 @@
+{% extends "base.htm" %} {% block title %}Rooms{% endblock %} {% block head %}
+{{ super() }} {% endblock %} {% block content %} {{ super() }}
+<!-- <script>
+      function AlertMessage() {
+        let msg = "{{msg}}";
+        if (msg.length == 0) return;
+        else window.alert(msg);
+      }
+      //window.alert('{{msg}}')
+      window.load(AlertMessage());
+    </script> -->r
+<div class="table-responsive justify-content-center mt-5 mx-auto w-75">
+  <!-- <div class="table-responsive"> -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Room Type</th>
+        <th scope="col">Total beds</th>
+        <th scope="col">Booked beds</th>
+        <th scope="col">Unbooked beds</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in res %}
+      <tr>
+        <th scope="row">{{item.Room_type}}</th>
+        <td>{{item.Total_beds}}</td>
+        <td>{{item.Booked}}</td>
+        <td>{{item.Unbooked}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <!-- </div> -->
+</div>
+{% endblock %}
