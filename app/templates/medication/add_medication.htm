@@ -1,0 +1,54 @@
+{% extends "base.htm" %} {% block title %}Login{% endblock %} {% block head %}
+{{ super() }} {% endblock %} {% block content %} {{ super() }}
+<script>
+  function AlertMessage(){
+    let msg = "{{msg}}";
+    if (msg.length == 0)
+      return;
+    
+    else
+     window.alert(msg);
+  }
+  //window.alert('{{msg}}')
+  window.load(AlertMessage())
+</script>
+<div class="container-md my-5 w-75 p-5 bg-success">
+  <div class="container-fluid p-3">
+    <h1 class="display-5 fw-bold">Add Medicine</h1>
+  </div>
+  <form action = "{{ url_for('med.addMedication') }}" method="post" class ="justify-content-spacearound p-4">
+    <div class="mb-3 row ">
+      <label for="code" class="form-label col-sm-3">Medcode</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control " id="code" name="medcode" />
+      </div>
+    </div>
+
+    <div class="mb-3 row ">
+      <label for="Mname" class="form-label col-sm-3">Medicine name</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control " id="Mname" name="mname" />
+      </div>
+    </div>
+
+    <div class="mb-3 row ">
+      <label for="Mbrand" class="form-label col-sm-3">Medicine brand</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="Mbrand" name="mbrand" />
+      </div>
+    </div>
+    <div class="mb-3 row ">
+      <label for="Desc" class="form-label col-sm-3">description</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="Desc" name="desc" />
+      </div>
+    </div>
+
+    
+    <button type="submit" class="btn btn-primary" id="submitbutton">
+      Submit
+    </button>
+  </form>
+</div>
+
+{% endblock %}

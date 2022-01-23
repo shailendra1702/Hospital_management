@@ -1,7 +1,7 @@
 import pymysql
 from flask import Blueprint, session, request, g,redirect,render_template,url_for,flash
 
-med = Blueprint('med', __name__,template_folder='templates')
+med = Blueprint('med', __name__, template_folder='templates')
 from pymysql.constants import CLIENT
 
 @med.before_request
@@ -14,8 +14,9 @@ def db_connect():
                                    database='hospital_management',
                                    charset='utf8mb4',
                                    cursorclass=pymysql.cursors.DictCursor,
+                                   client_flag=CLIENT.MULTI_STATEMENTS
             )
-            cursor = g.db.cursor()
+            g.cursor = g.db.cursor()
             print('connection established')
     except Exception as e:
         print('error in establishing connection')
@@ -42,32 +43,41 @@ def medication():
     g.cursor.execute('select * from medication')
     res = g.cursor.fetchall()
     print(res)
-    return res
+    return render_template('medication/medication.htm',res = res)
 
 @med.route('/add',methods = ["GET", "POST"])
 def addMedication():
     # username = session["username"]
     # g.cursor.execute('select AdminId from admin where AdminId = %s',(username,))
     # flag = g.cursor.fetchone()
+    msg = ''
     if request.method == 'POST' and 'medcode' in request.form and 'mname' in request.form and 'mbrand' in request.form and 'desc' in request.form:
-        
-        medcode = request.form['medcode']
-        mname = request.form['mname']
-        mbrand = request.form['mbrand']
-        desc = request.form['desc']
-        
-        if not re.match(r'[a-zA-Z]{2}[0-9]{3}+',medcode):
-            msg = 'medcode should match pattern like AB123'
-        elif not re.match(r'[a-zA-Z]+',mname):
-            msg = 'med name should contain only alphabaet characters'
-        elif not re.match(r'[a-zA-Z]+',mbrand):
-            msg = 'brand name should contain only alphabaet characters'
-        else:
-            g.cursor.execute('insert into department values(%s,%s,%s,%s)',(medcode,mname,mbrand,desc))
-            msg = 'medcode {medcode} successfully added'
-            print(msg)
-        
-        return render_template('addMedication.htm')
+        try:
+            medcode = request.form['medcode']
+            mname = request.form['mname']
+            mbrand = request.form['mbrand']
+            desc = request.form['desc']
+            
+            if not re.match(r'[a-zA-Z]{2}[0-9]{3}',medcode):
+                msg = 'medcode should match pattern like AB123'
+            elif not re.match(r'[a-zA-Z]+',mname):
+                msg = 'med name should contain only alphabaet characters'
+            elif not re.match(r'[a-zA-Z]+',mbrand):
+                msg = 'brand name should contain only alphabaet characters'
+            else:
+                g.cursor.execute('insert into medication values(%s,%s,%s,%s)',(medcode,mname,mbrand,desc))
+                g.db.commit()
+                msg = f"medcode {medcode} successfully added"
+        except Exception as e:
+            print(e)
+
+        finally:
+            return render_template('medication/add_medication.htm',msg = msg)
+    elif request.method == "POST":
+        msg = "please fill up the form"
+        return render_template('medication/add_medication.htm',msg = msg)
+    else:
+        return render_template('medication/add_medication.htm',msg = msg)
 
 @med.route('/proc')
 def procedure():
