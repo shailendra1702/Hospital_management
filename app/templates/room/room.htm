@@ -1,5 +1,5 @@
 {% extends "base.htm" %} {% block title %}Rooms{% endblock %} {% block head %}
-{{ super() }} {% endblock %} {% block content %} {{ super() }}
+{{ super() }} {% endblock %}{% block content %}{{ super() }}{% endblock %} {% block subcontent %} {{ super() }}
 <!-- <script>
       function AlertMessage() {
         let msg = "{{msg}}";
@@ -8,8 +8,19 @@
       }
       //window.alert('{{msg}}')
       window.load(AlertMessage());
-    </script> -->r
-<div class="table-responsive justify-content-center mt-5 mx-auto w-75">
+    </script> -->
+    <div class='w-75 mx-auto p-5'>
+      <div class="container-fluid d-flex justify-content-between p-3 row">
+        <div class = "col-md-6"><h1 class="display-5 fw-bold">Rooms and Status</h1></div>
+        {% if user == 'admin' %}
+        <div class = "col-md-3 ">
+          <a class="btn btn-success" href="{{url_for('room.bookRoom')}}" role="button">Book Bed</a></div>
+        <div class = "col-md-3 ">
+          <a class="btn btn-success" href="{{url_for('room.vacateBed')}}" role="button">Vacate Bed</a></div>
+        {% endif %}
+      </div>
+    </div>
+<div class="table-responsive justify-content-center mx-auto w-75">
   <!-- <div class="table-responsive"> -->
   <table class="table">
     <thead>

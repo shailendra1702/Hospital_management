@@ -49,7 +49,6 @@ def userLogin():
         account = g.cursor.fetchone()
     
         if account:
-            session['loggedin'] = True
             session['username'] = account['PatId']
             session['user'] = 'patient'
             msg = 'Logged in successfully !'
@@ -59,7 +58,7 @@ def userLogin():
     elif request.method == 'POST':
         msg = "please enter login details"
     else:
-        return render_template('login.htm', msg=msg)
+        return render_template('authentication/login.htm', msg=msg,user = 'User Login')
 
 @auth.route('/doctorlogin', methods=['GET', 'POST'])
 def doctorLogin():
@@ -69,10 +68,9 @@ def doctorLogin():
         username = request.form['username']
         password = request.form['password']
         g.cursor.execute(
-            'SELECT * FROM Doctor WHERE DocId = % s AND password = % s', (username, password, ))
+            'SELECT * FROM doctor WHERE DocId = % s AND password = % s', (username, password, ))
         account = g.cursor.fetchone()
         if account:
-            session['loggedin'] = True
             session['username'] = account['DocId']
             session['user'] = 'doctor'
             msg = 'Logged in successfully !'
@@ -82,7 +80,7 @@ def doctorLogin():
     elif request.method == 'POST':
         msg = "please enter login details"
         
-    return render_template('login.htm', msg=msg)
+    return render_template('authentication/login.htm', msg=msg,user = 'Doctor Login')
 
 @auth.route('/adminlogin', methods=['GET', 'POST'])
 def adminLogin():
@@ -92,11 +90,10 @@ def adminLogin():
         username = request.form['username']
         password = request.form['password']
         g.cursor.execute(
-            'SELECT * FROM Doctor WHERE DocId = % s AND password = % s', (username, password, ))
+            'SELECT * FROM admin WHERE AdminId = % s AND password = % s', (username, password, ))
         account = g.cursor.fetchone()
         if account:
-            session['loggedin'] = True
-            session['username'] = account['DocId']
+            session['username'] = account['AdminId']
             session['user'] = 'admin'
             msg = 'Logged in successfully !'
             return redirect(url_for('hello')) #has to changed to dashboard.htm  
@@ -105,7 +102,7 @@ def adminLogin():
     elif request.method == 'POST':
         msg = "please enter login details"
         
-    return render_template('login.htm', msg=msg)
+    return render_template('authentication/login.htm', msg=msg,user = 'Admin Login')
 
 
 @auth.route('/logout')
@@ -113,7 +110,7 @@ def logout():
     session.pop('loggedin', None)
     session.pop('username', None)
     session.pop('user', None)
-    return redirect(url_for('.login'))
+    return redirect(url_for('auth.userLogin'))
 
 
 @auth.route('/register', methods=['GET',"POST"])
@@ -146,13 +143,13 @@ def register():
                 'INSERT INTO patient VALUES (%s, %s, %s,%s,%s,%d)', (username,Fname,Lname,email,password, Phone))
             g.db.commit()
             flash("successfully registered",'info')    
-        return render_template('register.htm')
+        return render_template('authentication/register.htm')
 
     
     elif request.method == 'POST':
         flash('fill out the form','info')
         
     
-    return render_template('register.htm')
+    return render_template('authentication/register.htm')
 
 

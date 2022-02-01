@@ -1,5 +1,7 @@
 {% extends "base.htm" %} {% block title %}Register{% endblock %} {% block head%}
-{{ super() }} {% endblock %} {% block content %} {{ super() }}
+{{ super() }} {% endblock %} {% block content %}
+  
+{% endblock %}{% block subcontent %} 
 
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
@@ -12,7 +14,7 @@
    {% endfor %}
 {% endif %}
 {% endwith %}
-<div class="container-md d-flex justify-content-center my-5">
+<div class="container-md d-flex justify-content-center mt-5">
  
   <form action="{{ url_for('auth.register') }}" method="post">
     <div class="mb-3">
@@ -46,8 +48,8 @@
 
     <div class="mb-3 row">
       <div class="row col-md-6">
-        <label for="Fname" class="col-md-4 col-form-label">First name</label>
-        <div class="col-md-8">
+        <label for="Fname" class="col-md-5 col-form-label">First name</label>
+        <div class="col-md-7">
           <input type="text" class="form-control" id="Fname" name="Fname" />
         </div>
       </div>
@@ -57,17 +59,25 @@
           <input type="text" class="form-control" id="Lname" name="Lname" />
         </div>
       </div>
-      <div class="mb-3">
-        <label for="ph" class="form-label">Phone</label>
-        <input
-          type="number"
-          class="form-control"
-          id="ph"
-          name="Phone"
-        />
-      </div>
+    </div>
+    <div class="mb-3">
+      <label for="ph" class="form-label">Phone</label>
+      <input
+        type="number"
+        class="form-control"
+        id="ph"
+        name="Phone"
+      />
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
+<div class="btn-group d-flex justify-content-center p-5">
+  <div>
+    <a href="{{url_for('auth.userLogin')}}" class="btn btn-primary" aria-current="page">UserLogin</a>
+    <a href="{{url_for('auth.doctorLogin')}}" class="btn btn-primary">DoctorLogin</a>
+    <a href="{{url_for('auth.adminLogin')}}" class="btn btn-primary">AdminLogin</a>
+    <a href="{{url_for('auth.register')}}" class="btn btn-primary active">Register</a>
+  </div>
+  </div>
 {% endblock %}

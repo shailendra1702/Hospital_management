@@ -1,0 +1,99 @@
+{% extends "base.htm" %} {% block title %}Login{% endblock %} {% block head %}
+{{ super() }} {% endblock %} {% block content %}{{ super() }}{% endblock %}{% block subcontent %} {{ super() }}
+<script>
+  function AlertMessage() {
+    let msg = "{{msg}}";
+    if (msg.length == 0) return;
+    else window.alert(msg);
+  }
+  //window.alert('{{msg}}')
+  window.load(AlertMessage());
+</script>
+<div class="container-md my-5 w-75 p-5 bg-success">
+  <div class="container-fluid p-3">
+    <h1 class="display-5 fw-bold">Add Patient Summary</h1>
+  </div>
+  <form
+    action="{{ url_for('med.addDetails') }}"
+    method="post"
+    class="justify-content-spacearound p-4"
+  >
+    <div class="mb-3 row">
+      <label for="username" class="form-label col-sm-3">Patient id</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="username" name="patid" />
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="doctor" class="form-label col-sm-3">Doctor</label>
+      <div class="col-sm-9">
+        <select
+          class="form-select form-select-md mb-3"
+          id="doctor"
+          size="1"
+          aria-label=".form-select-lg example"
+          name="docid"
+        >
+          <option selected>select the doctor</option>
+          {% for item in res1 %}
+          <option value="{{item.DocId}}">
+            {{item.Fname}}-{{item.Speciality}}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="Pcode" class="form-label col-sm-3">Procedure code</label>
+      <div class="col-sm-9">
+        <input type="number" class="form-control" id="Pcode" name="proccode" />
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="room" class="form-label col-sm-3">Room Type</label>
+      <div class="col-sm-9">
+        <select
+          class="form-select form-select-md mb-3"
+          id="room"
+          size="1"
+          aria-label=".form-select-lg example"
+          name="roomtype"
+        >
+          <option selected>select the roomtype</option>
+          {% for item in res %}
+          <option value="{{item.Room_type}}">{{item.Room_type}}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <!-- <div class="mb-3 row ">
+      <label for="Pname" class="form-label col-sm-3">Procedure name</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control " id="Pname" name="procname" />
+      </div>
+    </div>
+
+    <div class="mb-3 row ">
+      <label for="Cost" class="form-label col-sm-3">Cost</label>
+      <div class="col-sm-9">
+        <input type="number" class="form-control" id="Cost" name="cost" />
+      </div>
+    </div> -->
+    <!-- <div class="mb-3 row ">
+      <label for="Desc" class="form-label col-sm-3">description</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="Desc" name="desc" />
+      </div>
+    </div> -->
+
+    <button type="submit" class="btn btn-primary" id="submitbutton">
+      Submit
+    </button>
+  </form>
+</div>
+
+{% endblock %}

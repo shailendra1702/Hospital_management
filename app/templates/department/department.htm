@@ -1,5 +1,7 @@
 {% extends "base.htm" %} {% block title %}Login{% endblock %} {% block
-head %} {{ super() }} {% endblock %} {% block content %} {{ super() }}
+head %} {{ super() }} {% endblock %} {% block content %}
+  {{ super() }}
+{% endblock %}{% block subcontent %} {{ super() }}
 <!-- <script>
   function AlertMessage() {
     let msg = "{{msg}}";
@@ -9,9 +11,19 @@ head %} {{ super() }} {% endblock %} {% block content %} {{ super() }}
   //window.alert('{{msg}}')
   window.load(AlertMessage());
 </script> -->
+<div class='w-75 mx-auto p-5'>
+  <div class="container-fluid d-flex justify-content-between p-3 row">
+    <div class = "col-md-8"><h1 class="display-5 fw-bold">Department</h1></div>
+    {% if user == 'admin' %}
+    <div class = "col-md-4 ">
+      <a class="btn btn-success" href="{{url_for('dept.addDepartment')}}" role="button">Add Department</a></div>
+    {% endif %}
+    
+  </div>
+</div>
 <div class="table-responsive justify-content-center mt-5 mx-auto w-75">
   <!-- <div class="table-responsive"> -->
-    <table class="table ">
+    <table class="table table-bordered border-primary">
       <thead>
         <tr>
           <th scope="col">id</th>

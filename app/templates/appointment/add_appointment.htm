@@ -1,5 +1,7 @@
 {% extends "base.htm" %} {% block title %}Login{% endblock %} {% block head %}
-{{ super() }} {% endblock %}{% block content %}{{ super() }}{% endblock %} {% block subcontent %} {{ super() }}
+{{ super() }} {% endblock %}{% block content %}
+  {{ super() }} {% endblock %}
+{% block subcontent %} {{ super() }}
 <script>
   function AlertMessage(){
     let msg = "{{msg}}";
@@ -14,17 +16,20 @@
 </script>
 <div class="container-md my-5 w-75 p-5 bg-success">
   <div class="container-fluid p-3">
-    <h1 class="display-5 fw-bold">Add Medicine</h1>
+    <h1 class="display-5 fw-bold">Add Appointment</h1>
   </div>
-  <form action = "{{ url_for('med.addMedication') }}" method="post" class ="justify-content-spacearound p-4">
-    <div class="mb-3 row ">
-      <label for="code" class="form-label col-sm-3">Medcode</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control " id="code" name="medcode" />
-      </div>
+  <form action = "{{ url_for('appointment.addAppointment') }}" method="post" class ="justify-content-spacearound p-4">
+    <div class="mb-3">
+        <!-- <label for="cars">Select the Doctor</label> -->
+        <select class="form-select form-select-lg mb-3" size = "1" aria-label=".form-select-lg example" name = 'docid'>
+            <option selected>select the doctor</option>
+            {% for item in res %}
+            <option value="{{item.DocId}}">{{item.Fname}}-{{item.Speciality}}</option>
+            {% endfor %}
+          </select>
     </div>
 
-    <div class="mb-3 row ">
+    <!-- <div class="mb-3 row ">
       <label for="Mname" class="form-label col-sm-3">Medicine name</label>
       <div class="col-sm-9">
         <input type="text" class="form-control " id="Mname" name="mname" />
@@ -42,7 +47,7 @@
       <div class="col-sm-9">
         <input type="text" class="form-control" id="Desc" name="desc" />
       </div>
-    </div>
+    </div> -->
 
     
     <button type="submit" class="btn btn-primary" id="submitbutton">

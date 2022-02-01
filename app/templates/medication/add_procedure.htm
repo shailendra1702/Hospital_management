@@ -14,35 +14,35 @@
 </script>
 <div class="container-md my-5 w-75 p-5 bg-success">
   <div class="container-fluid p-3">
-    <h1 class="display-5 fw-bold">Add Medicine</h1>
+    <h1 class="display-5 fw-bold">Add Procedure</h1>
   </div>
-  <form action = "{{ url_for('med.addMedication') }}" method="post" class ="justify-content-spacearound p-4">
+  <form action = "{{ url_for('med.addProcedure') }}" method="post" class ="justify-content-spacearound p-4">
     <div class="mb-3 row ">
-      <label for="code" class="form-label col-sm-3">Medcode</label>
+      <label for="Pcode" class="form-label col-sm-3">Procedure code</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control " id="code" name="medcode" />
+        <input type="number" class="form-control " id="Pcode" name="proccode" />
       </div>
     </div>
 
     <div class="mb-3 row ">
-      <label for="Mname" class="form-label col-sm-3">Medicine name</label>
+      <label for="Pname" class="form-label col-sm-3">Procedure name</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control " id="Mname" name="mname" />
+        <input type="text" class="form-control " id="Pname" name="procname" />
       </div>
     </div>
 
     <div class="mb-3 row ">
-      <label for="Mbrand" class="form-label col-sm-3">Medicine brand</label>
+      <label for="Cost" class="form-label col-sm-3">Cost</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="Mbrand" name="mbrand" />
+        <input type="number" class="form-control" id="Cost" name="cost" />
       </div>
     </div>
-    <div class="mb-3 row ">
+    <!-- <div class="mb-3 row ">
       <label for="Desc" class="form-label col-sm-3">description</label>
       <div class="col-sm-9">
         <input type="text" class="form-control" id="Desc" name="desc" />
       </div>
-    </div>
+    </div> -->
 
     
     <button type="submit" class="btn btn-primary" id="submitbutton">

@@ -1,5 +1,5 @@
 {% extends "base.htm" %} {% block title %}Login{% endblock %} {% block head %}
-{{ super() }} {% endblock %} {% block content %} {{ super() }}
+{{ super() }} {% endblock %} {% block content %}{{ super() }}{% endblock %}{% block subcontent %} {{ super() }}
 <script>
   function AlertMessage(){
     let msg = "{{msg}}";
@@ -12,7 +12,7 @@
   //window.alert('{{msg}}')
   window.load(AlertMessage())
 </script>
-<div class="container-md my-5 w-75 p-5 bg-success">
+<div class="container-md my-5 w-75 p-5 bg-warning">
   <div class="container-fluid p-3">
     <h1 class="display-5 fw-bold">Add Department</h1>
   </div>

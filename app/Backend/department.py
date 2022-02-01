@@ -40,10 +40,11 @@ import re
      
 @dept.route('/')
 def department():
+    user = session['user']
     g.cursor.execute('select * from department')
     res = g.cursor.fetchall()
     print(res)
-    return render_template('department/department.htm', res = res)
+    return render_template('department/department.htm', res = res, user = user)
 
 @dept.route('/add',methods = ["GET", "POST"])
 def addDepartment():

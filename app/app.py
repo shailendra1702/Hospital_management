@@ -1,5 +1,5 @@
 from asyncio.windows_events import NULL
-from flask import Flask, render_template,Blueprint
+from flask import Flask, render_template,session,redirect, url_for
 import pymysql
 from pymysql.constants import CLIENT
 
@@ -9,11 +9,13 @@ from Backend.authentication import auth
 from Backend.department import dept
 from Backend.medication import med
 from Backend.rooms import room
+from Backend.appointment import appointment
 
 app.register_blueprint(auth,url_prefix="/auth")
 app.register_blueprint(dept,url_prefix="/dept")
 app.register_blueprint(med,url_prefix="/med")
 app.register_blueprint(room,url_prefix="/room")
+app.register_blueprint(appointment,url_prefix="/appointment")
 
 
 app.secret_key = "3f46e7936cd92e18c66af8eb7b0575058aba97e6972fc1bce3fd53d3e11b4861"
@@ -40,8 +42,11 @@ table()
 
 @app.route("/")
 def hello():
-    print('during view')
-    return render_template('hello.htm', name=None)
+    if 'user' in session:
+        user = session['user']
+        return render_template('dashboard.htm',user = user)
+    else:
+        return redirect(url_for('auth.userLogin'))
 
 # main driver function
 if __name__ == '__main__':

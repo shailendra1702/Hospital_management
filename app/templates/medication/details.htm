@@ -1,0 +1,71 @@
+{% extends "base.htm" %} {% block title %}Login{% endblock %} {% block
+    head %} {{ super() }} {% endblock %} {% block content %}
+      {{ super() }}
+    {% endblock %}{% block subcontent %} {{ super() }}
+    <!-- <script>
+      function AlertMessage() {
+        let msg = "{{msg}}";
+        if (msg.length == 0) return;
+        else window.alert(msg);
+      }
+      //window.alert('{{msg}}')
+      window.load(AlertMessage());
+    </script> -->
+    <div class='w-75 mx-auto p-5'>
+      <div class="container-fluid d-flex justify-content-between p-3 row">
+        <div class = "col-md-8"><h1 class="display-5 fw-bold">Details/Bill</h1></div>
+        {% if user == 'admin' %}
+        <div class = "col-md-4 ">
+          <a class="btn btn-success" href="{{url_for('med.addDetails')}}" role="button">Add Detail</a></div>
+        {% endif %}
+        
+      </div>
+    </div>
+    <div class="table-responsive justify-content-center mx-auto w-75">
+      <!-- <div class="table-responsive"> -->
+        <table class="table table-bordered border-primary">
+          <thead>
+            <tr>
+                {% if user == 'patient' %}
+                    <th scope="col">Doctor name</th>
+                {% else %}
+                    <th scope="col">Patid</th>
+                    <th scope="col">Docid</th>
+                {% endif %}
+             
+                <th scope="col">Procedure name</th>
+                <th scope="col">Room Type</th>
+                <th scope="col">Issued Date</th>
+                <th scope="col">Total bill</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if user == 'patient'%}
+            {% for item in res %}
+            <tr>
+                <th scope="row">{{item.Fname}}</th>
+                <td>{{item.Proc_name}}</td>
+                <td>{{item.Room_type}}</td>
+                <td>{{item.issued_date}}</td>
+                <td>{{item.Total_amt}}</td>
+            </tr>
+            {% endfor %}
+        
+            {% else %}
+            {% for item in res %}
+            <tr>
+                <th scope="row">{{item.PatId}}</th>
+                <td>{{item.DocId}}</td>
+                <td>{{item.Proc_name}}</td>
+                <td>{{item.Room_type}}</td>
+                <td>{{item.issued_date}}</td>
+                <td>{{item.Total_amt}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>
+      <!-- </div> -->
+    </div>
+    {% endblock %}
+    

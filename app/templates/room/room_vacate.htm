@@ -1,0 +1,54 @@
+{% extends "base.htm" %} {% block title %}Vacating Bed{% endblock %} {% block
+    head %} {{ super() }} {% endblock %} {% block content %}{{ super() }}{% endblock %}{% block subcontent %} {{ super() }}
+    <script>
+      function AlertMessage(){
+        let msg = "{{msg}}";
+        if (msg.length == 0)
+          return;
+        
+        else
+         window.alert(msg);
+      }
+      //window.alert('{{msg}}')
+      window.load(AlertMessage())
+    </script>
+    <div class="container-md my-5 w-75 p-5 bg-success">
+      <div class="container-fluid p-3">
+        <h1 class="display-5 fw-bold">Book Room</h1>
+      </div>
+      <form
+        action="{{ url_for('room.vacateBed') }}"
+        method="post"
+      >
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Room Type</th>
+              <th scope="col">check to vacate</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in res %}
+            <tr>
+              <th scope="row">{{item.Room_type}}</th>
+              <td>
+                <input
+                class="form-check-input"
+                type="checkbox"
+                value="{{item.Room_type}}"
+                id="flexCheckDefault"
+                name="roomtype"
+              />
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary" id="submitbutton">
+            Submit
+          </button>
+      </form>
+    </div>
+    
+    {% endblock %}
+    

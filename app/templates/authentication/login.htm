@@ -1,5 +1,5 @@
-{% extends "templates/base.htm" %} {% block title %}Login{% endblock %} {% block head %}
-{{ super() }} {% endblock %} {% block content %} {{ super() }}
+{% extends "base.htm" %} {% block title %}Login{% endblock %} {% block head %}
+{{ super() }} {% endblock %} {% block content %}{% endblock %}{% block subcontent %}
 <script>
   function AlertMessage(){
     let msg = "{{msg}}";
@@ -12,8 +12,18 @@
   //window.alert('{{msg}}')
   window.load(AlertMessage())
 </script>
-<div class="container-md d-flex justify-content-center my-5">
-  <form action = "{{ url_for('auth.login') }}" method="post">
+
+
+<div class="container-md d-flex flex-column justify-content-center my-5">
+  <div class="container-fluid display-4 bg-warning">{{user}}</div>
+
+  {% if user == 'User Login' %}
+  <form action = "{{ url_for('auth.userLogin') }}" method="post">
+  {% elif user == 'Doctor Login'%}
+  <form action = "{{ url_for('auth.doctorLogin') }}" method="post">
+  {% else %}
+  <form action = "{{ url_for('auth.adminLogin') }}" method="post">
+  {% endif %}
     <div class="mb-3">
       <label for="username" class="form-label">username</label>
       <input type="text" class="form-control" id="username" name="username" />
@@ -33,5 +43,15 @@
       Submit
     </button>
   </form>
+ 
 </div>
+<div class="btn-group d-flex justify-content-center p-5">
+<div>
+  <a href="{{url_for('auth.userLogin')}}" class="btn btn-primary" aria-current="page">UserLogin</a>
+  <a href="{{url_for('auth.doctorLogin')}}" class="btn btn-primary">DoctorLogin</a>
+  <a href="{{url_for('auth.adminLogin')}}" class="btn btn-primary">AdminLogin</a>
+  <a href="{{url_for('auth.register')}}" class="btn btn-primary">Register</a>
+</div>
+</div>
+
 {% endblock %}

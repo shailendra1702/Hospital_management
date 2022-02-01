@@ -1,0 +1,49 @@
+{% extends "base.htm" %} {% block title %}Login{% endblock %} {% block head %}
+{{ super() }} {% endblock %} {% block content %} {{ super() }} {% endblock %}{%
+block subcontent %} {{ super() }}
+<!-- <script>
+      function AlertMessage() {
+        let msg = "{{msg}}";
+        if (msg.length == 0) return;
+        else window.alert(msg);
+      }
+      //window.alert('{{msg}}')
+      window.load(AlertMessage());
+    </script> -->
+<div class="w-75 mx-auto p-5">
+  <div class="container-fluid d-flex justify-content-between p-3 row">
+    <div class="col-md-8"><h1 class="display-5 fw-bold">PROCEDURE</h1></div>
+    {% if user == 'admin' %}
+    <div class="col-md-4">
+      <a
+        class="btn btn-success"
+        href="{{url_for('med.addProcedure')}}"
+        role="button"
+        >Add Procedure</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<div class="table-responsive justify-content-center mx-auto w-75">
+  <!-- <div class="table-responsive"> -->
+  <table class="table table-bordered border-primary">
+    <thead>
+      <tr>
+        <th scope="col">Procedure code</th>
+        <th scope="col">Procedure name</th>
+        <th scope="col">Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in res %}
+      <tr>
+        <th scope="row">{{item.Proc_code}}</th>
+        <td>{{item.Proc_name}}</td>
+        <td>{{item.Cost}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <!-- </div> -->
+</div>
+{% endblock %}
